@@ -1,7 +1,7 @@
 # SEO SERP MVP
 
-[![tests](https://github.com/testomut/seo-serp-mvp/actions/workflows/tests.yml/badge.svg)](https://github.com/testomut/seo-serp-mvp/actions/workflows/tests.yml)
-[![daily](https://github.com/testomut/seo-serp-mvp/actions/workflows/daily.yml/badge.svg)](https://github.com/testomut/seo-serp-mvp/actions/workflows/daily.yml)
+[![tests](https://github.com/testomut/ai-builds/actions/workflows/seo-serp-mvp-tests.yml/badge.svg)](https://github.com/testomut/ai-builds/actions/workflows/seo-serp-mvp-tests.yml)
+[![daily](https://github.com/testomut/ai-builds/actions/workflows/daily.yml/badge.svg)](https://github.com/testomut/ai-builds/actions/workflows/daily.yml)
 
 Каждый день собирает топ-10 Google.ca (mobile) по 10 ключам, хранит историю позиций и размечает каждый новый URL
 с помощью LLM: подходит ли сайт для размещения, какие казино-бренды на нём, контакт владельца.

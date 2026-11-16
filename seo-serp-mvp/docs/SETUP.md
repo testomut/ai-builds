@@ -3,7 +3,7 @@
 ## 1. Без ключей
 
 ```bash
-git clone https://github.com/testomut/seo-serp-mvp.git && cd seo-serp-mvp
+git clone https://github.com/testomut/ai-builds.git && cd ai-builds/seo-serp-mvp
 python -m venv .venv && .venv\Scripts\activate      # macOS/Linux: source .venv/bin/activate
 pip install -r requirements.txt
 cp .env.example .env

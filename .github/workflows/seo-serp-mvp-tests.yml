@@ -1,13 +1,18 @@
 # Runs the tests on every push. Needs no keys and uses no paid APIs.
-name: tests
+name: seo-serp-mvp tests
 
 on:
   push:
+    paths: ["seo-serp-mvp/**", ".github/workflows/seo-serp-mvp-tests.yml"]
   pull_request:
+    paths: ["seo-serp-mvp/**"]
 
 jobs:
   pytest:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: seo-serp-mvp
     steps:
       - uses: actions/checkout@v5
 

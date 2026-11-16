@@ -1,6 +1,6 @@
-# Runs the pipeline every day and on demand (Actions tab -> "Run workflow", or /run in the bot).
+# seo-serp-mvp: runs the pipeline every day and on demand (Actions tab -> "Run workflow", or /run in the bot).
 # GitHub wipes the machine after each run, so the database is committed back to the repository.
-name: daily
+name: seo-serp-mvp daily
 
 on:
   schedule:
@@ -15,22 +15,37 @@ permissions:
 jobs:
   run:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: seo-serp-mvp   # the project lives in a subfolder of ai-builds
     steps:
+      # The API keys live in this repository's secrets; until they are added the scheduled run is a no-op.
+      - name: Check that the pipeline is configured
+        id: configured
+        working-directory: .
+        env:
+          SEARCHAPI_KEY: ${{ secrets.SEARCHAPI_KEY }}
+        run: echo "ok=$([ -n "$SEARCHAPI_KEY" ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+
       - uses: actions/checkout@v5
+        if: steps.configured.outputs.ok == 'true'
 
       - uses: actions/setup-python@v6
+        if: steps.configured.outputs.ok == 'true'
         with:
           python-version: "3.12"
 
       - run: pip install -r requirements.txt
+        if: steps.configured.outputs.ok == 'true'
 
       - name: Save Google credentials to a file
+        if: steps.configured.outputs.ok == 'true' && env.GOOGLE_CREDENTIALS_JSON != ''
         env:
           GOOGLE_CREDENTIALS_JSON: ${{ secrets.GOOGLE_CREDENTIALS_JSON }}
-        if: env.GOOGLE_CREDENTIALS_JSON != ''
         run: echo "$GOOGLE_CREDENTIALS_JSON" > google-credentials.json
 
       - name: Run pipeline
+        if: steps.configured.outputs.ok == 'true'
         env:
           SEARCHAPI_KEY: ${{ secrets.SEARCHAPI_KEY }}
           SERPAPI_KEY: ${{ secrets.SERPAPI_KEY }}
@@ -45,6 +60,7 @@ jobs:
         run: python main.py
 
       - name: Commit results
+        if: steps.configured.outputs.ok == 'true'
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@users.noreply.github.com"
